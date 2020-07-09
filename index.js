@@ -32,6 +32,11 @@ app.get("/info", (req, res) =>
     } people <br> <br> ${new Date()}</p>`
   )
 );
+app.get("/api/persons/:id", (req, res) => {
+  const person = persons.find((person) => Number(req.params.id) === person.id);
+  if (!person) return res.status(404).end();
+  res.json(person);
+});
 
 const PORT = 3001;
 
