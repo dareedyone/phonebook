@@ -2,8 +2,16 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-app.use(morgan("tiny"));
 app.use(express.json());
+morgan.token("data", function getData(req) {
+  const data = Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : "";
+  return data;
+});
+
+app.use(
+  morgan(":method :url :status :res[content-length] :response-time ms :data")
+);
+
 let persons = [
   {
     name: "Arto Hellas",
