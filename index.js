@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors());
+app.use(express.static("build"));
 app.use(express.json());
 morgan.token("data", function getData(req) {
   const data = Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : "";
@@ -66,6 +67,7 @@ app.post("/api/persons", (req, res) => {
   res.json(person);
 });
 
+app.use((req, res) => res.status(404).json({ error: "uh oh, not found !!" }));
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => console.log("Server is listening on port", PORT));
