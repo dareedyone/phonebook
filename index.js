@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const cors = require("cors");
-
+const PORT = process.env.PORT;
+const Person = require("./models/person");
 app.use(cors());
 app.use(express.static("build"));
 app.use(express.json());
@@ -38,7 +40,9 @@ let persons = [
   },
 ];
 
-app.get("/api/persons", (req, res) => res.json(persons));
+app.get("/api/persons", (req, res) => {
+  Person.find({}).then((people) => res.json(people));
+});
 app.get("/info", (req, res) => {
   res.send(
     `<p>Phonebook has info for ${
@@ -68,6 +72,5 @@ app.post("/api/persons", (req, res) => {
 });
 
 app.use((req, res) => res.status(404).json({ error: "uh oh, not found !!" }));
-const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => console.log("Server is listening on port", PORT));
