@@ -78,9 +78,12 @@ app.put("/api/persons/:id", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
   const { name, number } = req.body;
-  new Person({ name, number }).save().then((person) => res.json(person));
+  new Person({ name, number })
+    .save()
+    .then((person) => res.json(person))
+    .catch((err) => next(err));
 });
 
 app.use((req, res) => res.status(404).json({ error: "uh oh, not found !" }));
