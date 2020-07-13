@@ -5,8 +5,9 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT;
 const Person = require("./models/person");
-app.use(cors());
+
 app.use(express.static("build"));
+app.use(cors());
 app.use(express.json());
 morgan.token("data", function getData(req) {
   const data = Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : "";
@@ -52,27 +53,35 @@ app.get("/info", (req, res) => {
     )
   );
 });
-app.get("/api/persons/:id", (req, res) => {
-  Person.findById(req.params.id).then((person) => res.json(person));
+app.get("/api/persons/:id", (req, res, next) => {
+  Person.findById(req.params.id)
+    .then((person) => {
+      if (person) return res.json(person);
+      res.status(404).end();
+    })
+    .catch((error) => next(error));
 });
 
-app.delete("/api/persons/:id", (req, res) => {
-  persons = persons.filter((person) => person.id !== Number(req.params.id));
-  res.status(204).end();
+app.delete("/api/persons/:id", (req, res, next) => {
+  Person.findByIdAndRemove(req.params.id)
+    .then((result) => res.status(204).end())
+    .catch((err) => next(err));
 });
+
 app.post("/api/persons", (req, res) => {
   const { name, number } = req.body;
   new Person({ name, number }).save().then((person) => res.json(person));
-
-  // if (!name && !number)
-  //   return res.status(400).json({ error: "name or number is missing !" });
-  // if (persons.find((person) => person.name === name))
-  //   return res.status(409).json({ error: "name must be unique !" });
-  // const person = { name, number, id: Math.floor(Math.random() * 324242442) };
-  // persons = persons.concat(person);
-  // res.json(person);
 });
 
 app.use((req, res) => res.status(404).json({ error: "uh oh, not found !!" }));
+
+const errorHandler = (err, req, res, next) => {
+  console.log(err.message);
+  if (err.name === "castError")
+    return res.status(400).send({ error: "malformatted id" });
+  next(err);
+};
+
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log("Server is listening on port", PORT));

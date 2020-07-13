@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const uri = process.env.MONGODB_URI;
+mongoose.set("useFindAndModify", false);
 
 console.log("connecting to mongodb...", uri);
 mongoose
