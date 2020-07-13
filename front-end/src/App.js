@@ -69,6 +69,7 @@ const App = () => {
     }
 
     create(newPerson).then((res) => {
+      console.log(res);
       setPeopleToShow(peopleToShow.concat(res));
       setPersons(persons.concat(res));
       setNewName("");
