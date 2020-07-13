@@ -83,7 +83,7 @@ app.post("/api/persons", (req, res) => {
   new Person({ name, number }).save().then((person) => res.json(person));
 });
 
-app.use((req, res) => res.status(404).json({ error: "uh oh, not found !!" }));
+app.use((req, res) => res.status(404).json({ error: "uh oh, not found !" }));
 
 const errorHandler = (err, req, res, next) => {
   console.log(err.message);
