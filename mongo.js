@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
   process.exit(1);
 }
 
-const [node, pathFile, password, name, number] = process.argv;
+const [_node, _pathFile, password, name, number] = process.argv;
 const url = `mongodb+srv://fullstack:${password}@cluster0.ab3ci.mongodb.net/phonebook-app?retryWrites=true&w=majority`;
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, () =>

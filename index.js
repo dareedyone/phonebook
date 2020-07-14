@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT;
 const Person = require("./models/person");
-const opts = { runValidators: true };
+
 app.use(express.static("build"));
 app.use(cors());
 app.use(express.json());
@@ -18,28 +18,28 @@ app.use(
   morgan(":method :url :status :res[content-length] :response-time ms :data")
 );
 
-let persons = [
-  {
-    name: "Arto Hellas",
-    number: "040-1234560",
-    id: 1,
-  },
-  {
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-    id: 2,
-  },
-  {
-    name: "Dan Abramov",
-    number: "12-43-234345",
-    id: 3,
-  },
-  {
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-    id: 4,
-  },
-];
+// let persons = [
+//   {
+//     name: "Arto Hellas",
+//     number: "040-123456",
+//     id: 1,
+//   },
+//   {
+//     name: "Ada Lovelace",
+//     number: "39-44-5323523",
+//     id: 2,
+//   },
+//   {
+//     name: "Dan Abramov",
+//     number: "12-43-234345",
+//     id: 3,
+//   },
+//   {
+//     name: "Mary Poppendieck",
+//     number: "39-23-6423122",
+//     id: 4,
+//   },
+// ];
 
 app.get("/api/persons", (req, res) => {
   Person.find({}).then((people) => res.json(people));
@@ -64,7 +64,7 @@ app.get("/api/persons/:id", (req, res, next) => {
 
 app.delete("/api/persons/:id", (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then((result) => res.status(204).end())
+    .then(() => res.status(204).end())
     .catch((err) => next(err));
 });
 

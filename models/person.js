@@ -10,7 +10,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then((res) => console.log("Connected to MONGODB"))
+  .then(() => console.log("Connected to MONGODB"))
   .catch((err) => console.log(err.message));
 
 const personSchema = mongoose.Schema({
