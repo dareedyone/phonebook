@@ -10,7 +10,7 @@
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "deploy:mid": "git add . && git commit -m server-edited && npm run deploy",
-    "ps:scale": "heoku ps:scale web=1",
+    "ps:scale": "heroku ps:scale web=1",
     "lint": "eslint .",
     "logs:prod": "heroku logs --tail",
     "test": "echo \"Error: no test specified\" && exit 1"
