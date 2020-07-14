@@ -90,7 +90,7 @@ app.post("/api/persons", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-app.use((req, res) => res.status(404).json({ error: "uh oh, not found !" }));
+app.use((req, res) => res.status(404).json({ error: "uh oh, not found. !" }));
 
 const errorHandler = (err, req, res, next) => {
   console.log(err.message);
