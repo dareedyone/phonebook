@@ -14,8 +14,17 @@ mongoose
   .catch((err) => console.log(err.message));
 
 const personSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  number: { type: String, required: true },
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: [3, "name must be more than 2 letters"],
+  },
+  number: {
+    type: String,
+    required: true,
+    minlength: [8, "number must be more than 8 digits"],
+  },
 });
 
 personSchema.plugin(uniqueValidator);

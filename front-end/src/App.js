@@ -30,7 +30,6 @@ const App = () => {
     };
     const found = persons.find(({ name }) => name === newName);
     if (found) {
-      // return alert(`${newName} is already added to phonebook`);
       let confirm = window.confirm(
         `${newName} is already added to phonebook, replace the old number with a new one ?`
       );
@@ -56,9 +55,9 @@ const App = () => {
               setmessage("");
             }, 5000);
           })
-          .catch(() => {
+          .catch((err) => {
             setmessage({
-              text: `Information of ${found.name} have already been removed from the server !`,
+              text: err.response.data.error.message,
               type: "error",
             });
             setTimeout(() => {
@@ -68,17 +67,26 @@ const App = () => {
       );
     }
 
-    create(newPerson).then((res) => {
-      console.log(res);
-      setPeopleToShow(peopleToShow.concat(res));
-      setPersons(persons.concat(res));
-      setNewName("");
-      setNewNumber("");
-      setmessage({ text: "Number added successfully !", type: "success" });
-      setTimeout(() => {
-        setmessage("");
-      }, 5000);
-    });
+    create(newPerson)
+      .then((res) => {
+        setPeopleToShow(peopleToShow.concat(res));
+        setPersons(persons.concat(res));
+        setNewName("");
+        setNewNumber("");
+        setmessage({ text: "Number added successfully !", type: "success" });
+        setTimeout(() => {
+          setmessage("");
+        }, 5000);
+      })
+      .catch((err) => {
+        setmessage({
+          text: err.response.data.error.message,
+          type: "error",
+        });
+        setTimeout(() => {
+          setmessage("");
+        }, 5000);
+      });
   };
   const handleDelete = (id, name) => {
     const extract = (arr) => arr.filter((person) => person.id !== id);

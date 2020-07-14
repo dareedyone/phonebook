@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT;
 const Person = require("./models/person");
-
+const opts = { runValidators: true };
 app.use(express.static("build"));
 app.use(cors());
 app.use(express.json());
@@ -73,7 +73,11 @@ app.put("/api/persons/:id", (req, res, next) => {
     body: { name, number },
     params: { id },
   } = req;
-  Person.findByIdAndUpdate(id, { name, number }, { new: true })
+  Person.findByIdAndUpdate(
+    id,
+    { name, number },
+    { new: true, runValidators: true }
+  )
     .then((updatedPerson) => res.json(updatedPerson))
     .catch((err) => next(err));
 });
@@ -90,8 +94,11 @@ app.use((req, res) => res.status(404).json({ error: "uh oh, not found !" }));
 
 const errorHandler = (err, req, res, next) => {
   console.log(err.message);
-  if (err.name === "castError")
+  const errorName = err.name;
+  if (errorName === "castError")
     return res.status(400).send({ error: "malformatted id" });
+  if (errorName === "ValidationError")
+    return res.status(400).send({ error: err });
   next(err);
 };
 
