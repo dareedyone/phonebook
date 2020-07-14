@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseUrl = "/api/persons";
+const baseUrl = '/api/persons';
 export const getAll = () => axios.get(baseUrl).then((res) => res.data);
 
 export const create = (newPerson) =>

@@ -105,20 +105,22 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <Notification message={message} />
-      <Filter newFilter={newFilter} doFiltering={doFiltering} />
-      <h3>Add a new</h3>
-      <PersonForm
-        handleSubmit={handleSubmit}
-        newName={newName}
-        setNewName={setNewName}
-        setNewNumber={setNewNumber}
-        newNumber={newNumber}
-      />
-      <h3>Numbers</h3>
-      <Persons peopleToShow={peopleToShow} handleDelete={handleDelete} />
+    <div className="phonebook">
+      <main>
+        <h2>Phonebook</h2>
+        <Notification message={message} />
+        <Filter newFilter={newFilter} doFiltering={doFiltering} />
+        <h3>Add a new</h3>
+        <PersonForm
+          handleSubmit={handleSubmit}
+          newName={newName}
+          setNewName={setNewName}
+          setNewNumber={setNewNumber}
+          newNumber={newNumber}
+        />
+        <h3>Numbers</h3>
+        <Persons peopleToShow={peopleToShow} handleDelete={handleDelete} />
+      </main>
     </div>
   );
 };

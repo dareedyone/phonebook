@@ -11,7 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+.notif {
+  width: 100% !important;
+}
 .success {
   border: 2px solid green;
   background-color: rgba(182, 175, 175, 0.548);
@@ -29,4 +31,16 @@ code {
   padding: 2px;
   color: red;
   padding-left: 5px;
+}
+
+.phonebook {
+  padding-top: 40px;
+}
+
+.phonebook main {
+  width: 50%;
+  margin: 0 auto;
+  background: rgb(95, 95, 39);
+  text-align: center;
+  padding: 10px;
 }
